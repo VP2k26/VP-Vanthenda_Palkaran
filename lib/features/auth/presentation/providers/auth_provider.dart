@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../../../core/routing/app_routes.dart';
-import '../../../../core/services/supabase_service.dart';
+import '../../../../core/database/supabase_service.dart';
 import '../../../../core/auth/user_role.dart';
 
 part 'auth_provider.g.dart';
@@ -56,6 +56,41 @@ class AuthNotifier extends _$AuthNotifier {
     }
   }
 
+  /// Returns route on success (auto-confirmed), or null if email verification needed.
+  Future<String?> signUp({
+    required String email,
+    required String password,
+    String? username,
+    String? phone,
+    String? role,
+  }) async {
+    state = const AsyncLoading();
+    try {
+      await ref.read(authRepositoryProvider).signUp(
+            email,
+            password,
+            username: username,
+            phone: phone,
+            role: role,
+          );
+      state = const AsyncData(null);
+      // If Supabase auto-confirms, user is immediately logged in
+      if (SupabaseService.isAuthenticated) {
+        if (role == 'manager' || role == 'vendor_admin') {
+          return AppRoutes.setupProfile;
+        } else if (role == 'vendor' || role == 'staff') {
+          return AppRoutes.staffHome;
+        } else {
+          return AppRoutes.customerHome;
+        }
+      }
+      return null; // email verification required
+    } on Exception catch (e) {
+      state = AsyncError(e, StackTrace.current);
+      return null;
+    }
+  }
+
   Future<void> signOut() async {
     state = const AsyncLoading();
     try {
@@ -70,12 +105,13 @@ class AuthNotifier extends _$AuthNotifier {
   Future<String> _routeForRole() async {
     final role = await SupabaseService.getUserRole();
     switch (role) {
+      case UserRole.manager:
       case UserRole.vendor:
         return AppRoutes.dashboard;
       case UserRole.customer:
         return AppRoutes.customerHome;
       case UserRole.staff:
-        return AppRoutes.staffHome;
+        return AppRoutes.delivery;
       case UserRole.unknown:
         return AppRoutes.setupProfile;
     }
@@ -85,12 +121,13 @@ class AuthNotifier extends _$AuthNotifier {
   static Future<String> routeForRole() async {
     final role = await SupabaseService.getUserRole();
     switch (role) {
+      case UserRole.manager:
       case UserRole.vendor:
         return AppRoutes.dashboard;
       case UserRole.customer:
         return AppRoutes.customerHome;
       case UserRole.staff:
-        return AppRoutes.staffHome;
+        return AppRoutes.delivery;
       case UserRole.unknown:
         return AppRoutes.setupProfile;
     }

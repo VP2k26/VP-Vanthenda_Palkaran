@@ -16,32 +16,29 @@ void main() async {
   // Load environment variables
   await dotenv.load(fileName: ".env");
 
-  // Initialize Firebase for Push Notifications
-  try {
-    await Firebase.initializeApp();
-  } catch (_) {
-    // Silently ignore if not configured
-  }
-
-  // Initialize Supabase
-  await Supabase.initialize(
-    url: AppConfig.supabaseUrl,
-    anonKey: AppConfig.supabaseAnonKey,
-  );
-
-  // Initialize Hive
-  await Hive.initFlutter();
-  await Hive.openBox(AppConfig.hiveDeliveriesBox);
-  await Hive.openBox(AppConfig.hiveCustomersBox);
-  await Hive.openBox(AppConfig.hiveSettingsBox);
-
-  // Firebase Initialization will go here
-
-  runApp(
-    const ProviderScope(
-      child: VanthendaPaalkaranApp(),
+  // Initialize Supabase and Hive in parallel for fast launch
+  await Future.wait([
+    Supabase.initialize(
+      url: AppConfig.supabaseUrl,
+      anonKey: AppConfig.supabaseAnonKey,
     ),
-  );
+    () async {
+      await Hive.initFlutter();
+      await Future.wait([
+        Hive.openBox(AppConfig.hiveDeliveriesBox),
+        Hive.openBox(AppConfig.hiveCustomersBox),
+        Hive.openBox(AppConfig.hiveSettingsBox),
+      ]);
+    }(),
+  ]);
+
+  // Initialize Firebase in background so it never freezes main UI startup
+  Firebase.initializeApp().catchError((e) {
+    debugPrint('Firebase init error: $e');
+    return null as dynamic;
+  });
+
+  runApp(const ProviderScope(child: VanthendaPaalkaranApp()));
 }
 
 class VanthendaPaalkaranApp extends ConsumerWidget {

@@ -1,14 +1,17 @@
 /// User roles in the Vanthenda Paalkaran system.
 enum UserRole {
-  /// Full access — manages everything.
+  /// Manager / Admin — Dairy Owner who manages customers, staff, billing, and settings.
+  manager,
+
+  /// Vendor — Delivery Boy / Supplier who delivers milk and handles routes.
   vendor,
 
-  /// Read-only access to own milk card, bills, payments, and requests.
+  /// Customer — Household consumer who views daily milk card and pays bills.
   customer,
 
-  /// Access to today's delivery route only.
+  /// Legacy alias for vendor.
   staff,
 
-  /// Role not yet determined (new user, pending setup).
+  /// Role not yet determined.
   unknown,
 }

@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../core/services/supabase_service.dart';
+import '../../../../core/database/supabase_service.dart';
 import '../../../../core/routing/app_routes.dart';
+import '../../../../core/widgets/gradient_background.dart';
 
 class CustomerHomeScreen extends ConsumerStatefulWidget {
   const CustomerHomeScreen({super.key});
@@ -16,14 +17,12 @@ class CustomerHomeScreen extends ConsumerStatefulWidget {
 
 class _CustomerHomeScreenState
     extends ConsumerState<CustomerHomeScreen> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
+      body: GradientBackground(
+        child: SafeArea(
+          child: Column(
           children: [
             // Header
             Padding(
@@ -109,7 +108,8 @@ class _CustomerHomeScreenState
           ],
         ),
       ),
-    );
+    ),
+  );
   }
 
   Future<void> _confirmSignOut(BuildContext context) async {
@@ -161,11 +161,11 @@ class _PortalCard extends StatelessWidget {
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: AppColors.border),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: AppColors.subtleShadow,
               blurRadius: 20,
-              offset: const Offset(0, -4),
+              offset: Offset(0, -4),
             ),
           ],
         ),

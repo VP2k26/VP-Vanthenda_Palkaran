@@ -5,6 +5,7 @@ import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/localization/localization_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/widgets/gradient_background.dart';
 import '../../../../core/widgets/premium_button.dart';
 import '../../../../core/widgets/premium_card.dart';
 import '../../../../core/routing/app_routes.dart';
@@ -17,10 +18,10 @@ class LanguageSelectionScreen extends ConsumerWidget {
     final langCode = ref.watch(languageProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
+      body: GradientBackground(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -70,7 +71,8 @@ class LanguageSelectionScreen extends ConsumerWidget {
           ),
         ),
       ),
-    );
+    ),
+  );
   }
 }
 
