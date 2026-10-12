@@ -1,47 +1,88 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+// ── Auth Cluster ───────────────────────────────────────────────────
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/language_selection_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
-import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
-import '../../features/milk_card/presentation/screens/milk_card_screen.dart';
-import '../../features/customer/presentation/screens/customers_list_screen.dart';
-import '../../features/billing/presentation/screens/billing_dashboard_screen.dart';
-import '../../features/payments/presentation/screens/payments_screen.dart';
-import '../../features/vacation/presentation/screens/vacation_mode_screen.dart';
-import '../../features/emergency/presentation/screens/emergency_requests_screen.dart';
-import '../../features/settings/presentation/screens/settings_screen.dart';
-import '../../features/milk_types/presentation/screens/milk_types_screen.dart';
-import '../../features/delivery/presentation/screens/delivery_routes_screen.dart';
-import '../../features/analytics/presentation/screens/analytics_screen.dart';
-import '../../features/analytics/presentation/screens/demand_forecast_screen.dart';
-import '../../features/analytics/presentation/screens/ai_assistant_screen.dart';
-import '../../features/staff/presentation/screens/staff_list_screen.dart';
+import '../../features/auth/presentation/screens/signup_screen.dart';
+
+// ── Manager / Admin Portal Cluster ─────────────────────────────────
+import '../../features/manager_portal/presentation/screens/dashboard_screen.dart';
+import '../../features/manager_portal/presentation/screens/vendor_setup_screen.dart';
+import '../../features/manager_portal/presentation/screens/customers_list_screen.dart';
+import '../../features/manager_portal/presentation/screens/customer_profile_screen.dart';
+import '../../features/manager_portal/data/repositories/customer_repository.dart';
+import '../../core/database/mock_data.dart';
+import '../../features/manager_portal/presentation/screens/billing_dashboard_screen.dart';
+import '../../features/manager_portal/presentation/screens/payments_screen.dart';
+import '../../features/manager_portal/presentation/screens/vacation_mode_screen.dart';
+import '../../features/manager_portal/presentation/screens/emergency_requests_screen.dart';
+import '../../features/manager_portal/presentation/screens/settings_screen.dart';
+import '../../features/manager_portal/presentation/screens/milk_types_screen.dart';
+import '../../features/manager_portal/presentation/screens/analytics_screen.dart';
+import '../../features/manager_portal/presentation/screens/demand_forecast_screen.dart';
+import '../../features/manager_portal/presentation/screens/ai_assistant_screen.dart';
+import '../../features/manager_portal/presentation/screens/staff_list_screen.dart';
+
+// ── Vendor / Delivery Portal Cluster ───────────────────────────────
+import '../../features/vendor_portal/presentation/screens/delivery_routes_screen.dart';
+import '../../features/vendor_portal/presentation/screens/delivery_tracker_screen.dart';
+import '../../features/vendor_portal/presentation/screens/staff_home_screen.dart';
+
+// ── Customer Portal Cluster ────────────────────────────────────────
 import '../../features/customer_portal/presentation/screens/customer_home_screen.dart';
-import '../../features/staff_portal/presentation/screens/staff_home_screen.dart';
-import '../../features/vendor/presentation/screens/vendor_setup_screen.dart';
+
+import '../transitions/transitions.dart';
 import 'app_routes.dart';
+
+/// Helper for silky-smooth dissolve & subtle glide transitions
+CustomTransitionPage<void> _buildSmoothDissolvePage({
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return AppPageTransitions.slideAndFade<void>(
+    state: state,
+    child: child,
+  );
+}
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: AppRoutes.splash,
     debugLogDiagnostics: false,
     routes: [
+      // ── Auth ──
       GoRoute(
         path: AppRoutes.splash,
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
         path: AppRoutes.language,
-        builder: (context, state) => const LanguageSelectionScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const LanguageSelectionScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.login,
-        builder: (context, state) => const LoginScreen(),
+        pageBuilder: (context, state) =>
+            _buildSmoothDissolvePage(state: state, child: const LoginScreen()),
       ),
       GoRoute(
+        path: AppRoutes.signup,
+        pageBuilder: (context, state) =>
+            _buildSmoothDissolvePage(state: state, child: const SignupScreen()),
+      ),
+
+      // ── Manager / Admin Portal ──
+      GoRoute(
         path: AppRoutes.setupProfile,
-        builder: (context, state) => const VendorSetupScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const VendorSetupScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.dashboard,
@@ -49,11 +90,19 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoutes.milkCard,
-        builder: (context, state) => const MilkCardScreen(),
+        builder: (context, state) => const CustomersListScreen(),
       ),
       GoRoute(
         path: AppRoutes.customers,
         builder: (context, state) => const CustomersListScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.customerProfile,
+        builder: (context, state) {
+          final customer =
+              state.extra as CustomerModel? ?? MockDataStore.customers.first;
+          return ManagerCustomerProfileScreen(customer: customer);
+        },
       ),
       GoRoute(
         path: AppRoutes.billing,
@@ -80,10 +129,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const MilkTypesScreen(),
       ),
       GoRoute(
-        path: AppRoutes.delivery,
-        builder: (context, state) => const DeliveryRoutesScreen(),
-      ),
-      GoRoute(
         path: AppRoutes.analytics,
         builder: (context, state) => const AnalyticsScreen(),
       ),
@@ -99,13 +144,25 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.staff,
         builder: (context, state) => const StaffListScreen(),
       ),
+
+      // ── Vendor / Delivery Portal ──
       GoRoute(
-        path: AppRoutes.customerHome,
-        builder: (context, state) => const CustomerHomeScreen(),
+        path: AppRoutes.delivery,
+        builder: (context, state) => const DeliveryRoutesScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.deliveryTracker,
+        builder: (context, state) => const DeliveryTrackerScreen(),
       ),
       GoRoute(
         path: AppRoutes.staffHome,
         builder: (context, state) => const StaffHomeScreen(),
+      ),
+
+      // ── Customer Portal ──
+      GoRoute(
+        path: AppRoutes.customerHome,
+        builder: (context, state) => const CustomerHomeScreen(),
       ),
     ],
   );

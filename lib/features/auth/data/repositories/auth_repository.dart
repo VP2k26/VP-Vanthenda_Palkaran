@@ -1,5 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../core/services/supabase_service.dart';
+import '../../../../core/database/supabase_service.dart';
 
 class AuthRepository {
   final _auth = SupabaseService.auth;
@@ -17,6 +17,25 @@ class AuthRepository {
   /// Verify OTP
   Future<void> verifyOtp(String phone, String otp) async {
     await _auth.verifyOTP(phone: phone, token: otp, type: OtpType.sms);
+  }
+
+  /// Sign up with email, password, and user profile metadata (username, phone, role).
+  Future<void> signUp(
+    String email,
+    String password, {
+    String? username,
+    String? phone,
+    String? role,
+  }) async {
+    await _auth.signUp(
+      email: email,
+      password: password,
+      data: {
+        if (username != null && username.isNotEmpty) 'username': username,
+        if (phone != null && phone.isNotEmpty) 'phone': phone,
+        if (role != null && role.isNotEmpty) 'role': role,
+      },
+    );
   }
 
   /// Sign out the current user.

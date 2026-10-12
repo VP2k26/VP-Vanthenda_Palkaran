@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
+typedef AntigravityCard = PremiumCard;
+
 class PremiumCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
@@ -21,26 +23,30 @@ class PremiumCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Warm frosted cream — matches the dashboard card palette
+    const warmCream = Color(0xFFFFFBEE);
+    const warmBorder = Color(0xFFF0DFB2);
+
     Widget card = Container(
       decoration: BoxDecoration(
-        color: backgroundColor ?? AppColors.surface,
+        color: backgroundColor ?? warmCream,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: AppColors.borderSubtle.withValues(alpha: 0.5),
-          width: 1.5,
+          color: warmBorder.withValues(alpha: 0.8),
+          width: 1.2,
         ),
         boxShadow: hasShadow
             ? [
-                BoxShadow(
+                const BoxShadow(
                   color: AppColors.mediumShadow,
                   blurRadius: 16,
-                  offset: const Offset(0, 8),
+                  offset: Offset(0, 8),
                   spreadRadius: -4,
                 ),
-                BoxShadow(
+                const BoxShadow(
                   color: AppColors.subtleShadow,
                   blurRadius: 6,
-                  offset: const Offset(0, 3),
+                  offset: Offset(0, 3),
                   spreadRadius: -2,
                 ),
               ]
