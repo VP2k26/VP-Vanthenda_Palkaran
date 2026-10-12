@@ -489,7 +489,8 @@ class _CustomersListScreenState extends ConsumerState<CustomersListScreen> {
     final customersState = ref.watch(customerNotifierProvider);
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFFFAF6EE),
+      extendBody: true,
       bottomNavigationBar: const ManagerBottomNavBar(currentIndex: 2),
       body: GradientBackground(
         child: SafeArea(

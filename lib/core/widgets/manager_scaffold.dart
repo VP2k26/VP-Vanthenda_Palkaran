@@ -47,7 +47,8 @@ class ManagerScaffold extends StatelessWidget {
     ));
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFFFAF6EE),
+      extendBody: true,
       floatingActionButton: floatingActionButton,
       bottomNavigationBar: bottomNavigationBar ??
           (currentNavIndex != null
