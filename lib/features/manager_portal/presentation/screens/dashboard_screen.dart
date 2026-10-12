@@ -24,8 +24,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   static const Color _lightBeige = Color(0xFFFAF6EE);
   static const Color _goldHalo = Color(0xFFFDE89D);
   static const Color _cardBgTranslucent = Color(
-    0x73FFF9E5,
-  ); // ~45% Opacity Frosted Cream
+    0xEAFFFBEA,
+  ); // ~92% Opacity Frosted Warm Cream for clean readability and UI match
 
   void _onNavTap(int index) {
     if (index == _selectedNavIndex) return;
@@ -229,7 +229,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         color: _cardBgTranslucent,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.65),
+          color: Colors.white.withValues(alpha: 0.85),
           width: 1.5,
         ),
         boxShadow: const [
@@ -382,7 +382,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               color: _cardBgTranslucent,
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: Colors.white.withValues(alpha: 0.65),
+                color: Colors.white.withValues(alpha: 0.85),
                 width: 1.5,
               ),
               boxShadow: const [
@@ -436,7 +436,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               color: _cardBgTranslucent,
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: Colors.white.withValues(alpha: 0.65),
+                color: Colors.white.withValues(alpha: 0.85),
                 width: 1.5,
               ),
               boxShadow: const [
@@ -503,7 +503,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         color: _cardBgTranslucent,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.65),
+          color: Colors.white.withValues(alpha: 0.85),
           width: 1.5,
         ),
         boxShadow: const [
@@ -579,11 +579,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.72),
+        color: Colors.white.withValues(alpha: 0.92),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.85),
-          width: 1.0,
+          color: Colors.white,
+          width: 1.2,
         ),
         boxShadow: const [
           BoxShadow(
@@ -688,10 +688,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       height: 80,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF3AB).withValues(alpha: 0.60),
+        color: const Color(0xFFFFF5BA).withValues(alpha: 0.88),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(26)),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.65),
+          color: Colors.white.withValues(alpha: 0.85),
           width: 1.2,
         ),
         boxShadow: const [
