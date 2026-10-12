@@ -21,8 +21,9 @@ class SettingsScreen extends ConsumerWidget {
       title: 'Settings',
       subtitle: 'Business & app preferences',
       titleIcon: Icons.settings_rounded,
+      currentNavIndex: 3,
       body: ListView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
         children: [
           // Profile Section
           PremiumCard(

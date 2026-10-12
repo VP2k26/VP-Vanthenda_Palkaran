@@ -51,15 +51,15 @@ class AnimatedBottomBar extends StatelessWidget {
       height: 80,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: AppTransitions.warmGold.withValues(alpha: 0.60),
+        color: const Color(0xFFFFF6BE),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(26)),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.65),
-          width: 1.2,
+          color: Colors.white,
+          width: 1.5,
         ),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x10000000),
+            color: Color(0x18000000),
             blurRadius: 16,
             offset: Offset(0, -4),
           ),

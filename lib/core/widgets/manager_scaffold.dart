@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../routing/app_routes.dart';
 import '../transitions/transitions.dart';
 import 'gradient_background.dart';
 
@@ -178,151 +177,9 @@ class ManagerBottomNavBar extends StatelessWidget {
 
   const ManagerBottomNavBar({super.key, required this.currentIndex});
 
-  static const Color _darkBrown = Color(0xFF3D2314);
-  static const Color _mediumBrown = Color(0xFF5A3E2B);
-
-  void _onNavTap(BuildContext context, int index) {
-    if (index == currentIndex) return;
-    HapticFeedback.selectionClick();
-
-    switch (index) {
-      case 0:
-        context.go(AppRoutes.dashboard);
-        break;
-      case 1:
-        context.go(AppRoutes.delivery);
-        break;
-      case 2:
-        context.go(AppRoutes.customers);
-        break;
-      case 3:
-        context.go(AppRoutes.settings);
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.none,
-      height: 80,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFF3AB).withValues(alpha: 0.60),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(26)),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.65),
-          width: 1.2,
-        ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x10000000),
-            blurRadius: 16,
-            offset: Offset(0, -4),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavTab(
-            context,
-            index: 0,
-            icon: Icons.home_rounded,
-            label: 'Home',
-          ),
-          _buildNavTab(
-            context,
-            index: 1,
-            icon: Icons.local_shipping_rounded,
-            label: 'Route',
-          ),
-          _buildNavTab(
-            context,
-            index: 2,
-            icon: Icons.people_alt_rounded,
-            label: 'CRM',
-          ),
-          _buildNavTab(
-            context,
-            index: 3,
-            icon: Icons.tune_rounded,
-            label: 'Settings',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavTab(
-    BuildContext context, {
-    required int index,
-    required IconData icon,
-    required String label,
-  }) {
-    final isSelected = currentIndex == index;
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => _onNavTap(context, index),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        curve: Curves.easeOutCubic,
-        transform: Matrix4.translationValues(0, isSelected ? -8 : 0, 0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Pill / Squircle Button Container
-            AnimatedScale(
-              scale: isSelected ? 1.05 : 1.0,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeOutCubic,
-              child: Container(
-                width: 56,
-                height: 44,
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? const Color(0xFF3D2314)
-                      : const Color(0xFFFFF9E0),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: isSelected
-                        ? const Color(0xFF3D2314)
-                        : const Color(0xFFF0DFB2),
-                    width: 1.5,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: isSelected
-                          ? const Color(0x443D2314)
-                          : const Color(0x14000000),
-                      blurRadius: isSelected ? 10 : 4,
-                      offset: Offset(0, isSelected ? 5 : 2),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    icon,
-                    size: 22,
-                    color: isSelected ? Colors.white : _darkBrown,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 4),
-            // Always-visible label
-            Text(
-              label,
-              style: GoogleFonts.outfit(
-                fontSize: 10.5,
-                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                color: isSelected ? _darkBrown : _mediumBrown,
-                letterSpacing: 0.1,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return AnimatedBottomBar(currentIndex: currentIndex);
   }
 }
+

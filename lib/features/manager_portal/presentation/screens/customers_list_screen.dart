@@ -1630,7 +1630,7 @@ class _CustomersListScreenState extends ConsumerState<CustomersListScreen> {
                                 .read(customerNotifierProvider.notifier)
                                 .loadCustomers(),
                             child: ListView.separated(
-                              padding: const EdgeInsets.fromLTRB(16, 8, 16, 80),
+                              padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
                               physics: const AlwaysScrollableScrollPhysics(
                                 parent: BouncingScrollPhysics(),
                               ),
