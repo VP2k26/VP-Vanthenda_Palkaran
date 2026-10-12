@@ -229,14 +229,19 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         color: _cardBgTranslucent,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.85),
+          color: const Color.fromARGB(
+            255,
+            133,
+            133,
+            133,
+          ).withValues(alpha: 0.25),
           width: 1.5,
         ),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x0C000000),
+            color: Color.fromARGB(11, 94, 93, 93),
             blurRadius: 16,
-            offset: Offset(0, 6),
+            offset: Offset(0, 0),
           ),
         ],
       ),
@@ -248,7 +253,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               Container(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEADBCE).withValues(alpha: 0.7),
+                  color: const Color.fromARGB(
+                    234,
+                    255,
+                    244,
+                    201,
+                  ).withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
@@ -283,7 +293,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     height: 10,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.85),
+                      color: const Color.fromARGB(
+                        255,
+                        223,
+                        220,
+                        197,
+                      ).withValues(alpha: 0.85),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -387,9 +402,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               ),
               boxShadow: const [
                 BoxShadow(
-                  color: Color(0x0C000000),
-                  blurRadius: 12,
-                  offset: Offset(0, 4),
+                  color: Color.fromARGB(11, 94, 93, 93),
+                  blurRadius: 16,
+                  offset: Offset(0, 0),
                 ),
               ],
             ),
@@ -436,14 +451,19 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               color: _cardBgTranslucent,
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: Colors.white.withValues(alpha: 0.85),
+                color: const Color.fromARGB(
+                  255,
+                  255,
+                  251,
+                  140,
+                ).withValues(alpha: 0.85),
                 width: 1.5,
               ),
               boxShadow: const [
                 BoxShadow(
-                  color: Color(0x0C000000),
-                  blurRadius: 12,
-                  offset: Offset(0, 4),
+                  color: Color.fromARGB(11, 94, 93, 93),
+                  blurRadius: 16,
+                  offset: Offset(0, 0),
                 ),
               ],
             ),
@@ -503,14 +523,19 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         color: const Color.fromARGB(234, 255, 244, 201).withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(28),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.85),
-          width: 1.5,
+          color: const Color.fromARGB(
+            255,
+            114,
+            114,
+            114,
+          ).withValues(alpha: 0.1),
+          width: 2,
         ),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x0C000000),
+            color: Color.fromARGB(11, 94, 93, 93),
             blurRadius: 16,
-            offset: Offset(0, 6),
+            offset: Offset(0, 0),
           ),
         ],
       ),
