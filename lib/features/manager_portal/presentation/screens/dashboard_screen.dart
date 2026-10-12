@@ -33,7 +33,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     setState(() => _selectedNavIndex = index);
 
     // Smooth micro-delay so the user sees the pop-up spring animation play
-    Future.delayed(const Duration(milliseconds: 160), () {
+    Future.delayed(const Duration(milliseconds: 80), () {
       if (!mounted) return;
       switch (index) {
         case 0:
@@ -234,7 +234,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             133,
             133,
             133,
-          ).withValues(alpha: 0.25),
+          ).withValues(alpha: 0.2),
           width: 1.5,
         ),
         boxShadow: const [
@@ -453,10 +453,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               border: Border.all(
                 color: const Color.fromARGB(
                   255,
-                  255,
-                  251,
-                  140,
-                ).withValues(alpha: 0.85),
+                  133,
+                  133,
+                  133,
+                ).withValues(alpha: 0.25),
                 width: 1.5,
               ),
               boxShadow: const [

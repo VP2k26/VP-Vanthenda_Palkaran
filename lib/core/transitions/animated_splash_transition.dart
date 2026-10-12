@@ -15,10 +15,10 @@ class AnimatedSplashTransition extends StatefulWidget {
   const AnimatedSplashTransition({
     super.key,
     this.onAnimationComplete,
-    this.initialPauseDuration = const Duration(milliseconds: 1000),
-    this.backgroundDuration = const Duration(milliseconds: 1400),
-    this.logoFadeDuration = const Duration(milliseconds: 600),
-    this.holdDuration = const Duration(milliseconds: 1000),
+    this.initialPauseDuration = Duration.zero,
+    this.backgroundDuration = const Duration(milliseconds: 1200),
+    this.logoFadeDuration = const Duration(milliseconds: 550),
+    this.holdDuration = const Duration(milliseconds: 400),
   });
 
   @override
@@ -73,29 +73,25 @@ class _AnimatedSplashTransitionState extends State<AnimatedSplashTransition>
     if (_isAnimationStarted || !mounted) return;
     _isAnimationStarted = true;
 
-    // 1. Initial State: Display clean frame for 0.5 sec (initialPauseDuration)
-    _bgController.value = 0.0;
+    // Start background flow animation immediately with zero freeze
+    _bgController.duration = widget.backgroundDuration;
+    _bgController.forward();
 
-    Future.delayed(widget.initialPauseDuration, () {
+    // Start logo smooth fade-in and scale as the wave rises
+    Future.delayed(const Duration(milliseconds: 320), () {
       if (!mounted) return;
-
-      // 2. Start background flow animation (rises & fills colors)
-      _bgController
-        ..duration = widget.backgroundDuration
-        ..forward().then((_) {
-          if (!mounted) return;
-
-          // 3. Smooth logo fade-in & scale
-          _logoController.forward().then((_) {
-            // 4. Hold completed screen, then navigate
-            Future.delayed(widget.holdDuration, () {
-              if (mounted) {
-                widget.onAnimationComplete?.call();
-              }
-            });
-          });
-        });
+      _logoController.forward();
     });
+
+    // Hold briefly after wave settles, then smoothly transition
+    Future.delayed(
+      widget.backgroundDuration + widget.holdDuration,
+      () {
+        if (mounted) {
+          widget.onAnimationComplete?.call();
+        }
+      },
+    );
   }
 
   @override

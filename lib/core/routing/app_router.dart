@@ -86,83 +86,137 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoutes.dashboard,
-        builder: (context, state) => const DashboardScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const DashboardScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.milkCard,
-        builder: (context, state) => const CustomersListScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const CustomersListScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.customers,
-        builder: (context, state) => const CustomersListScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const CustomersListScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.customerProfile,
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final customer =
               state.extra as CustomerModel? ?? MockDataStore.customers.first;
-          return ManagerCustomerProfileScreen(customer: customer);
+          return _buildSmoothDissolvePage(
+            state: state,
+            child: ManagerCustomerProfileScreen(customer: customer),
+          );
         },
       ),
       GoRoute(
         path: AppRoutes.billing,
-        builder: (context, state) => const BillingDashboardScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const BillingDashboardScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.payments,
-        builder: (context, state) => const PaymentsScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const PaymentsScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.vacation,
-        builder: (context, state) => const VacationModeScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const VacationModeScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.emergency,
-        builder: (context, state) => const EmergencyRequestsScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const EmergencyRequestsScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.settings,
-        builder: (context, state) => const SettingsScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const SettingsScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.milkTypes,
-        builder: (context, state) => const MilkTypesScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const MilkTypesScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.analytics,
-        builder: (context, state) => const AnalyticsScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const AnalyticsScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.demandForecast,
-        builder: (context, state) => const DemandForecastScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const DemandForecastScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.aiAssistant,
-        builder: (context, state) => const AiAssistantScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const AiAssistantScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.staff,
-        builder: (context, state) => const StaffListScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const StaffListScreen(),
+        ),
       ),
 
       // ── Vendor / Delivery Portal ──
       GoRoute(
         path: AppRoutes.delivery,
-        builder: (context, state) => const DeliveryRoutesScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const DeliveryRoutesScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.deliveryTracker,
-        builder: (context, state) => const DeliveryTrackerScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const DeliveryTrackerScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.staffHome,
-        builder: (context, state) => const StaffHomeScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const StaffHomeScreen(),
+        ),
       ),
 
       // ── Customer Portal ──
       GoRoute(
         path: AppRoutes.customerHome,
-        builder: (context, state) => const CustomerHomeScreen(),
+        pageBuilder: (context, state) => _buildSmoothDissolvePage(
+          state: state,
+          child: const CustomerHomeScreen(),
+        ),
       ),
     ],
   );
