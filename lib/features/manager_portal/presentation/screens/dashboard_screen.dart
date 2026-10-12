@@ -22,7 +22,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   static const Color _darkBrown = Color(0xFF3D2314);
   static const Color _mediumBrown = Color(0xFF5A3E2B);
   static const Color _lightBeige = Color(0xFFFAF6EE);
-  static const Color _goldHalo = Color(0xFFFDE89D);
+  static const Color _goldHalo = Color.fromARGB(255, 255, 224, 110);
   static const Color _cardBgTranslucent = Color(
     0xEAFFFBEA,
   ); // ~92% Opacity Frosted Warm Cream for clean readability and UI match
@@ -500,7 +500,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: _cardBgTranslucent,
+        color: const Color.fromARGB(234, 255, 244, 201).withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(28),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.85),
@@ -581,10 +581,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.92),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: Colors.white,
-          width: 1.2,
-        ),
+        border: Border.all(color: Colors.white, width: 1.2),
         boxShadow: const [
           BoxShadow(
             color: Color(0x08000000),
