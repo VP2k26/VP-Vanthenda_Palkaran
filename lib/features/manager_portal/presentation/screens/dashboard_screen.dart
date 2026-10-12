@@ -792,6 +792,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   // ── Slide-in Side Menu (from Left to Right) ───────────────────────────
   void _openSideMenu(BuildContext context) {
     HapticFeedback.selectionClick();
+    final businessProfile = ref.read(businessProfileProvider);
+    final isSolo = businessProfile.isSolo;
+    final dairyName = businessProfile.dairyName.trim().isNotEmpty
+        ? businessProfile.dairyName
+        : 'Sri Krishna Dairy';
+
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
@@ -859,7 +865,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Sri Krishna Dairy',
+                                  dairyName,
                                   style: GoogleFonts.outfit(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w800,
@@ -882,7 +888,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: Text(
-                                    'Manager Portal',
+                                    isSolo
+                                        ? 'Solo Vendor & Manager'
+                                        : 'Vendor & Manager',
                                     style: GoogleFonts.outfit(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
@@ -906,7 +914,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     ),
                     const Divider(height: 1, color: Color(0xFFEAE2C5)),
 
-                    // ── 2. Scrollable Menu Body ──
+                    // ── 2. Scrollable Menu Body (Manage Operations) ──
                     Expanded(
                       child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
@@ -917,87 +925,96 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // ── Section 1: Operations ──
-                            _buildSectionHeader('DAILY OPERATIONS'),
+                            // ── Section 1: Manage Operations ──
+                            _buildSectionHeader('MANAGE OPERATIONS'),
                             _buildSideMenuItem(
                               context: dialogContext,
                               icon: Icons.groups_rounded,
-                              title: 'Customer CRM',
-                              subtitle: 'Subscriptions, ledger & milk card',
+                              title: 'Customers',
+                              subtitle: 'Add, view & edit customers',
                               route: AppRoutes.customers,
                             ),
                             const SizedBox(height: 4),
                             _buildSideMenuItem(
                               context: dialogContext,
                               icon: Icons.local_shipping_rounded,
-                              title: 'Active Delivery Routes',
-                              subtitle: 'Live route map & drop sequence',
+                              title: 'Daily Deliveries',
+                              subtitle: "Today's deliveries & route map",
                               route: AppRoutes.delivery,
+                            ),
+                            const SizedBox(height: 4),
+                            _buildSideMenuItem(
+                              context: dialogContext,
+                              icon: Icons.calendar_month_rounded,
+                              title: 'Milk Card',
+                              subtitle: 'Daily delivery records & cards',
+                              route: AppRoutes.milkCard,
                             ),
                             const SizedBox(height: 16),
 
-                            // ── Section 2: Billing & Finance ──
-                            _buildSectionHeader('BILLING & FINANCE'),
+                            // ── Section 2: Billing & Payments ──
+                            _buildSectionHeader('BILLING & PAYMENTS'),
                             _buildSideMenuItem(
                               context: dialogContext,
                               icon: Icons.receipt_long_rounded,
-                              title: 'Monthly Bills',
-                              subtitle: 'WhatsApp invoices & revenue ledger',
+                              title: 'Billing',
+                              subtitle: 'Generate & publish monthly bills',
                               route: AppRoutes.billing,
                             ),
                             const SizedBox(height: 4),
                             _buildSideMenuItem(
                               context: dialogContext,
-                              icon: Icons.qr_code_2_rounded,
-                              title: 'Payment history',
-                              subtitle: 'Have your payment details',
+                              icon: Icons.payments_rounded,
+                              title: 'Payments',
+                              subtitle: 'View collection & payment history',
                               route: AppRoutes.payments,
                             ),
                             const SizedBox(height: 16),
 
-                            // ── Section 3: Special Requests ──
-                            _buildSectionHeader('SPECIAL REQUESTS'),
+                            // ── Section 3: Requests ──
+                            _buildSectionHeader('REQUESTS'),
                             _buildSideMenuItem(
                               context: dialogContext,
                               icon: Icons.beach_access_rounded,
-                              title: 'Vacation Mode',
-                              subtitle: 'Pause dates & holiday schedules',
+                              title: 'Vacation Requests',
+                              subtitle: 'Pause dates & scheduled leaves',
                               route: AppRoutes.vacation,
                             ),
                             const SizedBox(height: 4),
                             _buildSideMenuItem(
                               context: dialogContext,
                               icon: Icons.bolt_rounded,
-                              title: 'Emergency Orders',
-                              subtitle: 'Urgent extra milk broadcasts',
+                              title: 'Extra Milk Requests',
+                              subtitle: 'Urgent extra milk requests',
                               route: AppRoutes.emergency,
                             ),
                             const SizedBox(height: 16),
 
-                            // ── Section 4: Management & Tools ──
-                            _buildSectionHeader('MANAGEMENT & TOOLS'),
-                            _buildSideMenuItem(
-                              context: dialogContext,
-                              icon: Icons.badge_rounded,
-                              title: 'Staff & Delivery Boys',
-                              subtitle: 'Manage team & assignments',
-                              route: AppRoutes.staff,
-                            ),
-                            const SizedBox(height: 4),
+                            // ── Section 4: Analytics & Staff/Solo ──
+                            _buildSectionHeader('REPORTS & STAFF'),
                             _buildSideMenuItem(
                               context: dialogContext,
                               icon: Icons.analytics_rounded,
-                              title: 'Business Analytics',
-                              subtitle: 'Volume trends & growth insights',
+                              title: 'Reports & Analytics',
+                              subtitle: 'Volume trends, revenue & growth',
                               route: AppRoutes.analytics,
                             ),
                             const SizedBox(height: 4),
                             _buildSideMenuItem(
                               context: dialogContext,
-                              icon: Icons.smart_toy_rounded,
-                              title: 'AI Dairy Assistant',
-                              subtitle: 'Stock forecast & smart assistant',
-                              route: AppRoutes.aiAssistant,
+                              icon: isSolo
+                                  ? Icons.delivery_dining_rounded
+                                  : Icons.badge_rounded,
+                              title: isSolo
+                                  ? 'Solo Delivery Mode'
+                                  : 'Staff Management',
+                              subtitle: isSolo
+                                  ? 'Single Vendor • Direct route run'
+                                  : 'Delivery boys & route assignments',
+                              badgeText: isSolo ? 'Solo Run' : null,
+                              route: isSolo
+                                  ? AppRoutes.delivery
+                                  : AppRoutes.staff,
                             ),
                             const SizedBox(height: 12),
                           ],
@@ -1017,8 +1034,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                           _buildSideMenuItem(
                             context: dialogContext,
                             icon: Icons.settings_rounded,
-                            title: 'Settings & Business Profile',
-                            subtitle: 'UPI ID, dairy info & preferences',
+                            title: 'Settings',
+                            subtitle: 'Shop profile, milk types & rates',
                             route: AppRoutes.settings,
                           ),
                           const SizedBox(height: 4),
@@ -1079,12 +1096,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     required IconData icon,
     required String title,
     String? subtitle,
+    String? badgeText,
     required String route,
   }) {
     return _SideMenuItemTile(
       icon: icon,
       title: title,
       subtitle: subtitle,
+      badgeText: badgeText,
       darkBrown: _darkBrown,
       onTap: () {
         HapticFeedback.lightImpact();
@@ -1152,6 +1171,7 @@ class _SideMenuItemTile extends StatefulWidget {
   final IconData icon;
   final String title;
   final String? subtitle;
+  final String? badgeText;
   final Color darkBrown;
   final VoidCallback onTap;
 
@@ -1159,6 +1179,7 @@ class _SideMenuItemTile extends StatefulWidget {
     required this.icon,
     required this.title,
     this.subtitle,
+    this.badgeText,
     required this.darkBrown,
     required this.onTap,
   });
@@ -1203,14 +1224,45 @@ class _SideMenuItemTileState extends State<_SideMenuItemTile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.title,
-                    style: GoogleFonts.outfit(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: widget.darkBrown,
-                      letterSpacing: -0.2,
-                    ),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          widget.title,
+                          style: GoogleFonts.outfit(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: widget.darkBrown,
+                            letterSpacing: -0.2,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      if (widget.badgeText != null) ...[
+                        const SizedBox(width: 6),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 1.5,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(
+                              0xFF10B981,
+                            ).withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            widget.badgeText!,
+                            style: GoogleFonts.outfit(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF059669),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                   if (widget.subtitle != null) ...[
                     const SizedBox(height: 1),
